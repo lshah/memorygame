@@ -1,0 +1,96 @@
+html,
+body {
+	margin: 0;
+	padding: 0;
+	background: #F1D9A0;
+	color: #22586B;
+	font-family: 'Roboto', sans-serif;
+}
+
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	
+}
+
+.score-panel {
+	width: 350px;
+	color: #22586B;
+}
+
+.deck {
+	display: flex;
+	flex-wrap: wrap;
+	width: 500px;
+	min-height: 500px;
+	justify-content: space-between;
+	align-items: center;
+	padding: 32px;
+	border-radius: 5px;
+	background-image: linear-gradient(to bottom, #E9C46A, #F4A261,#E76F51);
+	box-shadow: 5px 5px 15px #889AA1;
+}
+
+.card {
+	border: 1px solid #26657A;
+	width: 100px;
+	height: 100px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #264653;
+	border-radius: 10px;
+	cursor: pointer;
+	font-size: 0;
+}
+
+.card.open{
+	transform: rotateY(0);
+	background: #264689;
+	cursor: default;
+}
+
+.card.show {
+	font-size: 33px;
+}
+
+.card.match {
+	background: #2A9D8F;
+	cursor: default;
+	font-size: 33px;
+}
+
+.score-panel,
+.stars,
+.moves,
+.restart {
+	display: inline-block;
+}
+
+.stars,
+.moves,
+.restart {
+	margin: 0 5px 0 5px;
+}
+
+.stars li {
+	display: inline-block;
+}
+
+
+.restart {
+	float: right;
+	cursor: pointer;
+	margin-left: -15px;
+}
+
+.card i {
+	/*font-size: 2em;*/
+	color: white;
+}
+
+ul {
+	list-style: none;
+}
