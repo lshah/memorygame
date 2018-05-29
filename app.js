@@ -65,6 +65,7 @@ function playGame(){
 					if(openCards[0].dataset.card == openCards[1].dataset.card){
 					matchedCards.push(card)[0];
 					matchedCards.push(card)[1];
+
 					openCards[0].classList.add('match');
 					openCards[0].classList.add('open');
 					openCards[0].classList.add('show');
@@ -75,6 +76,8 @@ function playGame(){
 
 					
 					openCards = [];
+					gameOver();
+
 
 				} else {
 						setTimeout(function(){
@@ -85,11 +88,15 @@ function playGame(){
 							openCards = [];
 						}, 1000);
 					}
+
 				}
 				
 				}
+
 				});
+
 			});
+
 	}
 
 playGame();
@@ -132,7 +139,7 @@ function updateStars(){
 			console.log("1 star");
 			stars[1].style.display = "none";
 }
-
+}
 
 function gameOver(){
 	let cardsInDeck = allCards.length;
@@ -142,4 +149,4 @@ function gameOver(){
 		console.log("Game Over");
 	}
 }
-}
+
