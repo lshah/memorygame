@@ -11,6 +11,10 @@ let cards = ['fa-birthday-cake','fa-birthday-cake',
 				'fa-code','fa-code'
 			];
 
+let allCards = [];
+let matchedCards = [];
+
+
 // generate card HTML
 function generateCard(card){
 	return `<li class="card" data-card="${card}"><i class="fa ${card}"></i></li>`;
@@ -39,13 +43,14 @@ function initGame (){
 	}));
 
 	deck.innerHTML = cardHTML.join('');
+	allCards = document.querySelectorAll('.card');
+	matchedCards = [];
 
 }
 
 initGame();
 
-let allCards = document.querySelectorAll('.card');
-let matchedCards = [];
+
 
 // play game
 function playGame(){
@@ -67,13 +72,8 @@ function playGame(){
 					matchedCards.push(card)[1];
 
 					openCards[0].classList.add('match');
-					openCards[0].classList.add('open');
-					openCards[0].classList.add('show');
 					
 					openCards[1].classList.add('match');
-					openCards[1].classList.add('open');
-					openCards[1].classList.add('show');
-
 					
 					openCards = [];
 					gameOver();
