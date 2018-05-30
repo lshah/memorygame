@@ -65,7 +65,7 @@ function playGame() {
 
   allCards.forEach(function(card) {
     card.addEventListener("click", function() {
-      updateMoves();
+      
       if (
         !card.classList.contains("open") &&
         !card.classList.contains("show") &&
@@ -76,6 +76,7 @@ function playGame() {
 
         // if 2 cards in array
         if (openCards.length == 2) {
+          updateMoves();
           if (openCards[0].dataset.card == openCards[1].dataset.card) {
             matchedCards.push(card)[0];
             matchedCards.push(card)[1];
