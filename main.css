@@ -78,6 +78,14 @@ body {
   display: inline-block;
 }
 
+.star {
+  visibility: hidden;
+}
+
+.show-star {
+  visibility: visible;
+}
+
 .restart {
   float: right;
   cursor: pointer;
@@ -85,7 +93,6 @@ body {
 }
 
 .card i {
-  /*font-size: 2em;*/
   color: white;
 }
 
@@ -109,15 +116,14 @@ ul {
   position: absolute;
   width: 70%;
   height: 30%;
-  /*padding: 100px 0;*/
-  background: #264689;
+  background: #264653;
   color: white;
-  cursor: pointer;
   z-index: 1;
   text-align: center;
   visibility: hidden;
   top: 175px;
   left: 15%;
+  border-radius: 5px;
 }
 
 .reload,
@@ -127,14 +133,25 @@ ul {
   border: 2px solid white;
   border-radius: 10px;
   margin: 5px;
+  cursor: pointer;
 }
 
 .reload {
-  background: #264689;
+  background: #2A9D8F;
   color: white;
+  border: none;
 }
 
 .closeBtn {
   background: white;
-  color: #264689;
+  color: #2A9D8F;
 }
+
+.ratings ul li{
+  display: inline-block;
+  margin-left: -48px;
+}
+
+/*[inert] {
+  opacity: .5;
+}*/

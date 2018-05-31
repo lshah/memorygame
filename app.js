@@ -107,13 +107,11 @@ playGame();
 function restartGame() {
   let restartBtn = document.querySelector(".restart");
   restartBtn.addEventListener("click", function() {
+    moves = 0;
     initGame();
     playGame();
-    moves = 0;
     document.querySelector(".moves").innerHTML = moves;
     updateStars();
-
-    console.log("restart button clicked");
   });
 }
 
@@ -128,38 +126,51 @@ function updateMoves() {
 }
 
 // update stars based on number of moves made
-function updateStars() {
-  let stars = document.getElementsByClassName("star");
-  if (moves <= 16) {
-    stars[2].style.display = "inline-block";
-    stars[1].style.display = "inline-block";
-    console.log("3 stars");
-  } else if (moves > 16 && moves <= 32) {
-    stars[2].style.display = "none";
-    console.log("2 stars");
-  } else {
-    console.log("1 star");
-    stars[1].style.display = "none";
+
+let stars = document.getElementsByClassName("star");
+let ratings = 3;
+function updateStars(){
+
+
+  if(moves <= 12){
+    // do nothing
   }
+
+  else if(moves > 12 && moves <= 20){
+  stars[2].classList.remove("show-star");  
+  ratings = 2;  
+    
+  }
+  else {
+    stars[2].classList.remove("show-star");
+    stars[1].classList.remove("show-star");
+    ratings = 1;
+  }
+
 }
 
 // modal pop-up on Game Over
 let popupText = document.querySelector(".pop-up-text");
+let container = document.querySelector("[inert]");
+
 function gameOver() {
   let cardsInDeck = allCards.length;
   let matchedCardsInDeck = matchedCards.length;
 
-  let container = document.querySelector(".container");
-
   if (cardsInDeck == matchedCardsInDeck) {
-    gameOverMessage = `<p class="modal-message">Game Over</p>
+    let createStar = `<li class="star show-star"><i class="fa fa-star"></i></li>`;
+    let finalRating = createStar.repeat(ratings);
+
+    gameOverMessage = 
+            `<h1 class="modal-message">Congratulations!</h1>
 							<p>Total moves: ${moves}</p>
+              <div class="ratings"><ul>${finalRating}</i></li></ul></div>
 							<button class="reload" onclick="reloadPage()">Play Again</button>
-							<button class="closeBtn" onclick="closeModal()">Close</button>`;
+							<button class="closeBtn" onclick="closeModal()">Close</button>`
+
     popupText.style.visibility = "visible";
     popupText.innerHTML = gameOverMessage;
-    container.style.opacity = "0.4";
-    console.log("Game Over");
+    container.style.opacity = "0.5";
   }
 }
 
@@ -171,5 +182,5 @@ function reloadPage() {
 // close modal and refresh page -- used in modal
 function closeModal() {
   popupText.style.visibility = "hidden";
-  reloadPage();
+  container.style.opacity = "1";
 }
