@@ -64,13 +64,15 @@ body {
 .score-panel,
 .stars,
 .moves,
-.restart {
+.restart,
+.timer {
   display: inline-block;
 }
 
 .stars,
 .moves,
-.restart {
+.restart,
+.timer {
   margin: 0 5px 0 5px;
 }
 
@@ -101,7 +103,7 @@ ul {
 }
 
 .pop-up {
-  /*position: relative;*/
+  position: relative;
   left: 0;
   top: 0;
   width: 100%;
@@ -115,7 +117,7 @@ ul {
 .pop-up-text {
   position: absolute;
   width: 70%;
-  height: 30%;
+  height: 33%;
   background: #264653;
   color: white;
   z-index: 1;
@@ -132,7 +134,7 @@ ul {
   width: 150px;
   border: 2px solid white;
   border-radius: 10px;
-  margin: 5px;
+  margin: 12px;
   cursor: pointer;
 }
 
@@ -152,6 +154,23 @@ ul {
   margin-left: -48px;
 }
 
-/*[inert] {
-  opacity: .5;
-}*/
+@media screen and (max-width: 600px){
+  .deck {
+    width: 240px;
+    min-height: 240px;
+  }
+
+  .card {
+    height: 55px;
+    width: 55px;
+  }
+
+  .pop-up-text {
+    width: 70%;
+    height: 53%;
+  }
+
+  .pop-up-text h1 {
+    font-size: 1.2em;
+  }
+}

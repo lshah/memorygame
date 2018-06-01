@@ -43,6 +43,33 @@ function shuffle(array) {
   return array;
 }
 
+let seconds = 0;
+let minutes = 0;
+let time;
+let clockTick = setInterval(startTime,1000);
+
+function startTime(){
+if(seconds < 10){
+    seconds = '0'+seconds;
+  }
+  
+  time = minutes + ":" + seconds;
+  seconds++;
+  if(seconds>60){
+    seconds = 0;
+    minutes++;
+    
+  }
+
+  document.querySelector('.time').innerText = time;
+}
+
+function stopTime(){
+  let finalTime = time;
+  clearInterval(clockTick);
+  console.log(finalTime);
+}
+
 // initialize game by displaying shuffled deck
 function initGame() {
   let deck = document.querySelector(".deck");
@@ -55,6 +82,7 @@ function initGame() {
   deck.innerHTML = cardHTML.join("");
   allCards = document.querySelectorAll(".card");
   matchedCards = [];
+  clockTick;
 }
 
 initGame();
@@ -107,6 +135,8 @@ playGame();
 function restartGame() {
   let restartBtn = document.querySelector(".restart");
   restartBtn.addEventListener("click", function() {
+    seconds = 0;
+    minutes = 0;
     moves = 0;
     initGame();
     playGame();
@@ -116,7 +146,6 @@ function restartGame() {
 }
 
 restartGame();
-
 // update moves everytime user clicks on a card
 let moves = 0;
 function updateMoves() {
@@ -154,10 +183,13 @@ let popupText = document.querySelector(".pop-up-text");
 let container = document.querySelector("[inert]");
 
 function gameOver() {
+
   let cardsInDeck = allCards.length;
   let matchedCardsInDeck = matchedCards.length;
-
+  
   if (cardsInDeck == matchedCardsInDeck) {
+    stopTime();
+
     let createStar = `<li class="star show-star"><i class="fa fa-star"></i></li>`;
     let finalRating = createStar.repeat(ratings);
 
@@ -165,6 +197,7 @@ function gameOver() {
             `<h1 class="modal-message">Congratulations!</h1>
 							<p>Total moves: ${moves}</p>
               <div class="ratings"><ul>${finalRating}</i></li></ul></div>
+              <div class="totalTime">Time: ${time}</div>
 							<button class="reload" onclick="reloadPage()">Play Again</button>
 							<button class="closeBtn" onclick="closeModal()">Close</button>`
 
@@ -183,4 +216,7 @@ function reloadPage() {
 function closeModal() {
   popupText.style.visibility = "hidden";
   container.style.opacity = "1";
+  document.getElementsByClassName('ratings').visibility = "hidden";
 }
+
+
