@@ -4,7 +4,6 @@
 <head>
   <meta charset="utf-8">
   <title>Memory game</title>
-  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <link href="main.css" rel="stylesheet prefetch">
   <link href="responsive.css" rel="stylesheet prefetch">
@@ -18,26 +17,32 @@
       <h1 class="main-title">Memory Game</h1>
     </header>
 
-    <section class="score-panel">
-      <ul class="stars">
-        <li class="star show-star"><i class="fa fa-star"></i></li>
-        <li class="star show-star"><i class="fa fa-star"></i></li>
-        <li class="star show-star"><i class="fa fa-star"></i></li>
-      </ul>
+    <div class="score-panel">
+      <ul class="stars"></ul>
 
       <span class="moves">0</span> Moves
       <div class="timer">Time: <span class="time"></span></div>
       <div class="restart"><i class="fa fa-redo"></i></div>
-    </section>
+    </div>
 
-    <section class="card-deck">
+    <div class="card-deck">
       <ul class="deck">
       </ul>
-    </section>
+    </div>
   </div>
 
   <div class="pop-up"></div>
-  <div class="pop-up-text"></div>
+  <div class="pop-up-text">
+    <h1 class="modal-title">Congratulations!</h1>
+    <p class="modal-message">Total moves: <span></span></p>
+    <div class="ratings">
+      <ul></ul>
+    </div>
+    <div class="totalTime">Time: <span></span></div>
+    <button class="reload" onclick="reloadPage()">Play Again</button>
+    <button class="closeBtn" onclick="closeModal()">Close</button>
+  </div>
+
   <script src="app.js"></script>
 </body>
 

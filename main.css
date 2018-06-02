@@ -139,22 +139,22 @@ ul {
 }
 
 .reload {
-  background: #2A9D8F;
+  background: #2a9d8f;
   color: white;
   border: none;
 }
 
 .closeBtn {
   background: white;
-  color: #2A9D8F;
+  color: #2a9d8f;
 }
 
-.ratings ul li{
+.ratings ul li {
   display: inline-block;
   margin-left: -48px;
 }
 
-@media screen and (max-width: 600px){
+@media screen and (max-width: 600px) {
   .deck {
     width: 240px;
     min-height: 240px;

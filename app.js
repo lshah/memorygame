@@ -20,6 +20,16 @@ let cards = [
 
 let allCards = [];
 let matchedCards = [];
+let moves = 0;
+let seconds = 0;
+let minutes = 0;
+let time;
+let stars = document.getElementsByClassName("star");
+let ratings = 3;
+let container = document.querySelector("[inert]");
+let popupText = document.querySelector(".pop-up-text");
+let createStar = `<li class="star show-star"><i class="fa fa-star"></i></li>`;
+let clockTick = setInterval(startTime, 1000);
 
 // generate card HTML
 function generateCard(card) {
@@ -43,31 +53,26 @@ function shuffle(array) {
   return array;
 }
 
-let seconds = 0;
-let minutes = 0;
-let time;
-let clockTick = setInterval(startTime,1000);
-
-function startTime(){
-if(seconds < 10){
-    seconds = '0'+seconds;
+// start timer for game
+function startTime() {
+  if (seconds < 10) {
+    seconds = "0" + seconds;
   }
-  
+
   time = minutes + ":" + seconds;
   seconds++;
-  if(seconds>60){
+  if (seconds > 60) {
     seconds = 0;
     minutes++;
-    
   }
 
-  document.querySelector('.time').innerText = time;
+  document.querySelector(".time").innerText = time;
 }
 
-function stopTime(){
+// stop timer for game
+function stopTime() {
   let finalTime = time;
   clearInterval(clockTick);
-  console.log(finalTime);
 }
 
 // initialize game by displaying shuffled deck
@@ -82,7 +87,15 @@ function initGame() {
   deck.innerHTML = cardHTML.join("");
   allCards = document.querySelectorAll(".card");
   matchedCards = [];
-  clockTick;
+
+  seconds = 0;
+  minutes = 0;
+  startTime();
+
+  moves = 0;
+  ratings = 3;
+
+  updateStars();
 }
 
 initGame();
@@ -93,7 +106,6 @@ function playGame() {
 
   allCards.forEach(function(card) {
     card.addEventListener("click", function() {
-      
       if (
         !card.classList.contains("open") &&
         !card.classList.contains("show") &&
@@ -135,19 +147,16 @@ playGame();
 function restartGame() {
   let restartBtn = document.querySelector(".restart");
   restartBtn.addEventListener("click", function() {
-    seconds = 0;
-    minutes = 0;
-    moves = 0;
+    let clockTick = setInterval(startTime, 1000);
     initGame();
     playGame();
     document.querySelector(".moves").innerHTML = moves;
-    updateStars();
   });
 }
 
 restartGame();
+
 // update moves everytime user clicks on a card
-let moves = 0;
 function updateMoves() {
   moves += 1;
   document.querySelector(".moves").innerHTML = moves;
@@ -155,55 +164,40 @@ function updateMoves() {
 }
 
 // update stars based on number of moves made
-
-let stars = document.getElementsByClassName("star");
-let ratings = 3;
-function updateStars(){
-
-
-  if(moves <= 12){
-    // do nothing
-  }
-
-  else if(moves > 12 && moves <= 20){
-  stars[2].classList.remove("show-star");  
-  ratings = 2;  
-    
-  }
-  else {
-    stars[2].classList.remove("show-star");
-    stars[1].classList.remove("show-star");
+function updateStars() {
+  if (moves <= 10) {
+    ratings = 3;
+  } else if (moves > 10 && moves <= 20) {
+    ratings = 2;
+  } else {
     ratings = 1;
   }
 
+  let starRating = createStar.repeat(ratings);
+  let gameRating = document.querySelector(".score-panel ul");
+  gameRating.innerHTML = starRating;
 }
 
 // modal pop-up on Game Over
-let popupText = document.querySelector(".pop-up-text");
-let container = document.querySelector("[inert]");
-
 function gameOver() {
-
   let cardsInDeck = allCards.length;
   let matchedCardsInDeck = matchedCards.length;
-  
+
   if (cardsInDeck == matchedCardsInDeck) {
     stopTime();
 
-    let createStar = `<li class="star show-star"><i class="fa fa-star"></i></li>`;
-    let finalRating = createStar.repeat(ratings);
-
-    gameOverMessage = 
-            `<h1 class="modal-message">Congratulations!</h1>
-							<p>Total moves: ${moves}</p>
-              <div class="ratings"><ul>${finalRating}</i></li></ul></div>
-              <div class="totalTime">Time: ${time}</div>
-							<button class="reload" onclick="reloadPage()">Play Again</button>
-							<button class="closeBtn" onclick="closeModal()">Close</button>`
-
     popupText.style.visibility = "visible";
-    popupText.innerHTML = gameOverMessage;
     container.style.opacity = "0.5";
+
+    let modalMoves = document.querySelector(".modal-message span");
+    modalMoves.innerHTML = moves;
+
+    let finalRating = createStar.repeat(ratings);
+    let modalRating = document.querySelector(".ratings ul");
+    modalRating.innerHTML = finalRating;
+
+    let modalTime = document.querySelector(".totalTime span");
+    modalTime.innerHTML = time;
   }
 }
 
@@ -216,7 +210,7 @@ function reloadPage() {
 function closeModal() {
   popupText.style.visibility = "hidden";
   container.style.opacity = "1";
-  document.getElementsByClassName('ratings').visibility = "hidden";
+  let modalRating = document.querySelector(".ratings");
+  let modalUl = document.querySelector(".ratings ul");
+  modalRating.removeChild(modalUl);
 }
-
-
