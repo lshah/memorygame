@@ -8,4 +8,4 @@ To play the game click on two cards at a time. If the cards match they will rema
 
 Reference - 
 Project created with help from - 
-Memory game webinar by Udacity Content developer Mikes Wales - https://www.youtube.com/watch?v=_rUH-sEs68Y
+Memory game webinar by Udacity Content developer Mike Wales - https://www.youtube.com/watch?v=_rUH-sEs68Y
