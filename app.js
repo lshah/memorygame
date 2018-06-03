@@ -118,14 +118,15 @@ function playGame() {
         if (openCards.length == 2) {
           updateMoves();
           if (openCards[0].dataset.card == openCards[1].dataset.card) {
+            
             matchedCards.push(card)[0];
             matchedCards.push(card)[1];
-
             openCards[0].classList.add("match");
 
             openCards[1].classList.add("match");
 
             openCards = [];
+            motivation();
             gameOver();
           } else {
             setTimeout(function() {
@@ -213,4 +214,18 @@ function closeModal() {
   let modalRating = document.querySelector(".ratings");
   let modalUl = document.querySelector(".ratings ul");
   modalRating.removeChild(modalUl);
+}
+
+//random messages that will display some times when the cards match
+function motivation(){
+  let matchingCards = matchedCards.length;
+  let messageList = document.getElementsByClassName("messages").length;
+  
+  let messageNumber = Math.floor(Math.random()*messageList);
+  
+  let message = document.getElementsByClassName('messages')[messageNumber];
+
+  if(matchingCards >= 2){
+    message.classList.add("show-message");
+  }
 }
