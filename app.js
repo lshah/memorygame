@@ -30,7 +30,8 @@ let ratings = 3;
 let container = document.querySelector("[inert]");
 let popupText = document.querySelector(".pop-up-text");
 let createStar = `<li class="star show-star"><i class="fa fa-star"></i></li>`;
-let clockTick = setInterval(startTime, 1000);
+let clockTick;
+let firstClick = false;
 
 // generate card HTML
 function generateCard(card) {
@@ -70,10 +71,30 @@ function startTime() {
   document.querySelector(".time").innerText = time;
 }
 
+//start timer on first click
+function startTimer() {
+  let click = 0;
+  allCards.forEach(function(card) {
+    card.addEventListener("click", function() {
+      click++;
+      if (click == 1) {
+        firstClick = true;
+        if (firstClick == true) {
+          clockTick = setInterval(startTime, 1000);
+        }
+      } else if (click > 1) {
+        firstClick = false;
+      }
+    });
+  });
+}
+
 // stop timer for game
 function stopTime() {
   let finalTime = time;
   clearInterval(clockTick);
+
+  click = 0;
 }
 
 // initialize game by displaying shuffled deck
@@ -91,32 +112,29 @@ function initGame() {
 
   seconds = 0;
   minutes = 0;
+  click = 0;
+
   startTime();
 
   moves = 0;
   ratings = 3;
-
   updateStars();
 }
 
 initGame();
 
-
 let autoCloseTimeout;
 
-
-function clearCards(){
-  openCards.forEach(function(card){
-    card.classList.remove("open","show");
+function clearCards() {
+  openCards.forEach(function(card) {
+    card.classList.remove("open", "show");
   });
   openCards = [];
 }
 
-
 // play game
 function playGame() {
-  // let openCards = [];
-
+  startTimer();
   allCards.forEach(function(card) {
     card.addEventListener("click", function() {
       if (
@@ -124,7 +142,6 @@ function playGame() {
         !card.classList.contains("show") &&
         !card.classList.contains("match")
       ) {
-
         if (openCards.length == 2) {
           clearInterval(autoCloseTimeout);
           clearCards();
@@ -135,11 +152,8 @@ function playGame() {
 
         // if 2 cards in array
         if (openCards.length == 2) {
-          
-
           updateMoves();
           if (openCards[0].dataset.card == openCards[1].dataset.card) {
-            
             matchedCards.push(card)[0];
             matchedCards.push(card)[1];
             openCards[0].classList.add("match");
@@ -150,7 +164,7 @@ function playGame() {
             motivation();
             gameOver();
           } else {
-            autoCloseTimeout = setTimeout(clearCards,1000);
+            autoCloseTimeout = setTimeout(clearCards, 1000);
           }
         }
       }
@@ -164,7 +178,7 @@ playGame();
 function restartGame() {
   let restartBtn = document.querySelector(".restart");
   restartBtn.addEventListener("click", function() {
-    let clockTick = setInterval(startTime, 1000);
+    stopTime();
     initGame();
     playGame();
     document.querySelector(".moves").innerHTML = moves;
@@ -219,7 +233,7 @@ function gameOver() {
 }
 
 // reload page -- used in modal
-function reloadPage() {
+function playAgain() {
   location.reload();
 }
 
@@ -229,19 +243,19 @@ function closeModal() {
   container.style.opacity = "1";
   let modalRating = document.querySelector(".ratings");
   let modalUl = document.querySelector(".ratings ul");
-  modalRating.removeChild(modalUl);
+  modalRating.innerHTML = "";
 }
 
 //random messages that will display some times when the cards match
-function motivation(){
+function motivation() {
   let matchingCards = matchedCards.length;
   let messageList = document.getElementsByClassName("messages").length;
-  
-  let messageNumber = Math.floor(Math.random()*messageList);
-  
-  let message = document.getElementsByClassName('messages')[messageNumber];
 
-  if(matchingCards >= 2){
+  let messageNumber = Math.floor(Math.random() * messageList);
+
+  let message = document.getElementsByClassName("messages")[messageNumber];
+
+  if (matchingCards >= 2) {
     message.classList.add("show-message");
   }
 }
