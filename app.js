@@ -178,10 +178,7 @@ playGame();
 function restartGame() {
   let restartBtn = document.querySelector(".restart");
   restartBtn.addEventListener("click", function() {
-    stopTime();
-    initGame();
-    playGame();
-    document.querySelector(".moves").innerHTML = moves;
+    location.reload();
   });
 }
 
