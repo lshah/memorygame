@@ -19,6 +19,7 @@ let cards = [
 ];
 
 let allCards = [];
+let openCards = [];
 let matchedCards = [];
 let moves = 0;
 let seconds = 0;
@@ -100,9 +101,21 @@ function initGame() {
 
 initGame();
 
+
+let autoCloseTimeout;
+
+
+function clearCards(){
+  openCards.forEach(function(card){
+    card.classList.remove("open","show");
+  });
+  openCards = [];
+}
+
+
 // play game
 function playGame() {
-  let openCards = [];
+  // let openCards = [];
 
   allCards.forEach(function(card) {
     card.addEventListener("click", function() {
@@ -111,11 +124,19 @@ function playGame() {
         !card.classList.contains("show") &&
         !card.classList.contains("match")
       ) {
+
+        if (openCards.length == 2) {
+          clearInterval(autoCloseTimeout);
+          clearCards();
+        }
+
         openCards.push(card);
         card.classList.add("open", "show");
 
         // if 2 cards in array
         if (openCards.length == 2) {
+          
+
           updateMoves();
           if (openCards[0].dataset.card == openCards[1].dataset.card) {
             
@@ -129,12 +150,7 @@ function playGame() {
             motivation();
             gameOver();
           } else {
-            setTimeout(function() {
-              openCards.forEach(function(card) {
-                card.classList.remove("open", "show");
-              });
-              openCards = [];
-            }, 1000);
+            autoCloseTimeout = setTimeout(clearCards,1000);
           }
         }
       }
